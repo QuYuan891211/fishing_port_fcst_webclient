@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
+    <link rel="icon" href="<%= BASE_URL %>nmefclogo.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- 引入ELEMENT-PLUS的CSS -->
+    <!-- <link rel="stylesheet" href="./static/libs/element-plus/index.css" /> -->
+    <!-- 首屏加载动画效果 -->
+    <style type="text/css">
+      #Loading {
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        -webkit-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+        z-index: 100;
+      }
+
+      @-webkit-keyframes ball-beat {
+        50% {
+          opacity: 0.2;
+          -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+        }
+
+        100% {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+      }
+
+      @keyframes ball-beat {
+        50% {
+          opacity: 0.2;
+          -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+        }
+
+        100% {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+      }
+
+      .ball-beat > div {
+        background-color: #4999ff;
+        width: 10px;
+        height: 10px;
+        border-radius: 100% !important;
+        margin: 2px;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        display: inline-block;
+        -webkit-animation: ball-beat 0.7s 0s infinite linear;
+        animation: ball-beat 0.7s 0s infinite linear;
+      }
+
+      .ball-beat > div:nth-child(2n-1) {
+        -webkit-animation-delay: 0.35s !important;
+        animation-delay: 0.35s !important;
+      }
+    </style>
+
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app">
+      <div id="Loading">
+        <div class="loader-inner ball-beat">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+      <!-- <div class="text">加载中，请稍后</div> -->
+     </div>
+    <!-- built files will be auto injected -->
+    <!-- <script src="http://api.map.baidu.com/getscript?v=2.0&ak=53oVIOgmSIejwV7EfphPgTynOZbIiVYu&services=&t=2019061210055" type="text/javascript"></script> -->
+    <link href="./static/css/ol.css" rel="stylesheet" type="text/css" />
+    <script src="./static/libs/ol5/ol.js" type="text/javascript"></script>
+    <!-- 引入easyui
+    <link rel="stylesheet" type="text/css" href="./static/libs/jqueryEasyui/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="./static/libs/jqueryEasyui/icon.css"/>
+    <script type="text/javascript" src="./static/libs/jqueryEasyui/jquery.min.js"></script>
+    <script type="text/javascript" src="./static/libs/jqueryEasyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="./static/libs/jqueryEasyui/locale/easyui-lang-zh_CN.js"></script> -->
+    <!-- 引入axios组件 -->
+    <script src="./static/libs/axios.min.js" type="text/javascript"></script>
+    <!-- 引入moment -->
+    <script src="./static/libs/moment.js" type="text/javascript"></script>
+
+
+
+    <!-- 引入VUE.js -->
+    <!-- <script src="./static/libs/vue/vue.js"></script> -->
+    <!-- 引入Element-ui -->
+    <!-- 引入Element-ui CSS? -->
+    <!-- <link  href="./static/libs/element-ui/element.css" rel="stylesheet" type="text/css">
+    <script src="./static/libs/element-ui/element.js"></script> -->
+    <!-- <script>
+      new Vue({
+        el: '#app',
+        data: function() {
+          return { visible: false }
+        }
+      })
+    </script> -->
+  </body>
+</html>

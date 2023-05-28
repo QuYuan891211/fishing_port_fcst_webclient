@@ -1,0 +1,33 @@
+.DS_Store
+node_modules
+/dist
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+public/static/data/portjson/port.json
+public/static/data/portjson/port_v2.json
+dist.rar
+public/static/data/portjson/port_v2_copy.json
+public/static/data/geojson/world.geojson
+public/static/data/geojson/hubei.geojson
+public/static/data/geojson/100000_full.json
+public/static/data/geolocation-orientation.json
+public/static/data/kml/2012_Earthquakes_Mag5.kml
+public/static/data/kml/2.5_month_age.kml
