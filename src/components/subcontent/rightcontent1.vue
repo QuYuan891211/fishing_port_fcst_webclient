@@ -37,7 +37,7 @@ export default {
     name: 'subContent4',
     data() {
         return {
-            url_data_statist:'http://' + baseurl + ':8085/buoy/statistics',
+            url_data_statist:'http://' + baseurl + ':8085/fcst/statistics',
             success_num:null
         }
     },
@@ -52,7 +52,7 @@ export default {
                 params: {//提交参数
 
                 }}).then((res) => {
-                // console.log('30天' + res.data.buoyDataList[0].site)
+                // console.log('30天' + res.data.fcstDataList[0].site)
                 // this.initLineChart()
                 if(100 == res.data.commonResultCode.code){
                 this.success_num = res.data.num

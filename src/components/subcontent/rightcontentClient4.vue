@@ -45,7 +45,7 @@ export default {
         return {
             //请求地址
             // echarts_id : 'lineChartClient_7',
-            url_last_single_data:'http://'+ baseurl + ':8085/buoy/lastSingle',
+            url_last_single_data:'http://'+ baseurl + ':8085/fcst/lastSingle',
             //观测数据信息
             data_arr_7:[],
             time_arr_7:[],
@@ -94,7 +94,7 @@ export default {
             this.data_arr_7=[]
                         // alert(item.queryTime)
                     this.time_arr_7=[]
-                    // alert('1天全要素' + res.data.buoyDataList[0].queryTime)
+                    // alert('1天全要素' + res.data.fcstDataList[0].queryTime)
                     // alert('all_ele_data_7 长度' + this.all_ele_data_7.length)
                     // alert('all_ele_data_7 时间' + this.all_ele_data_7[0].queryTime) 
                     for(var i=0;i<this.all_ele_data_7.length;i++){
@@ -306,10 +306,10 @@ export default {
                 name:this.selected_name
                 // timestamp:t
             }}).then((res) => {
-                // console.log('30天' + res.data.buoyDataList[0].site)
+                // console.log('30天' + res.data.fcstDataList[0].site)
                 // this.initLineChart()
                 if("100" == res.data.commonResultCode.code){
-                    this.all_ele_data_7 = res.data.buoyDataList
+                    this.all_ele_data_7 = res.data.fcstDataList
                     this.reloadChart()
                 }else if ("400" == res.data.commonResultCode.code) {
                     common.notification_error(res.data.commonResultCode.message);

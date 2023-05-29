@@ -86,8 +86,11 @@ let layer_point_index = 2
 
 
 //上线需修改：source
-//dev
-let select_source = [TiandiMap_img, TiandiMap_cia]
+//dev-栅格
+// let select_source = [TiandiMap_img, TiandiMap_cia]
+//dev2
+//dev-矢量
+let select_source = [TiandiMap_vec, TiandiMap_cva]
 //pro
 // let select_source = [GaodeMap_img_wms]
 export {

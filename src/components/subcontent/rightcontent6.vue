@@ -72,8 +72,8 @@ export default {
    
     data() {
         return {
-            url_last_data : 'http://'+ baseurl+':8085/buoy/filterlastAll',
-            url_query_data: 'http://'+ baseurl+':8085/buoy/queryAll',
+            url_last_data : 'http://'+ baseurl+':8085/fcst/filterlastAll',
+            url_query_data: 'http://'+ baseurl+':8085/fcst/queryAll',
             data_wave:null,
             default_time:31,
             last_all_data:[],
@@ -120,10 +120,10 @@ export default {
             // name:this.selected_name,
             time:this.select_time
             }}).then((res) => {
-            // console.log('30天' + res.data.buoyDataList[0].site)
+            // console.log('30天' + res.data.fcstDataList[0].site)
             // this.initLineChart()
             if(100 == res.data.commonResultCode.code){
-            this.last_all_data = res.data.buoyDataList
+            this.last_all_data = res.data.fcstDataList
             for(var i = 0;i<this.last_all_data.length;i++){
                 this.last_all_data[i].queryTime = this.last_all_data[i].queryTime.substring(0,13);
             }
@@ -150,10 +150,10 @@ export default {
             // name:this.selected_name,
             days:this.default_time
             }}).then((res) => {
-            // console.log('30天' + res.data.buoyDataList[0].site)
+            // console.log('30天' + res.data.fcstDataList[0].site)
             // this.initLineChart()
             if(100 == res.data.commonResultCode.code){
-            this.last_all_data = res.data.buoyDataList
+            this.last_all_data = res.data.fcstDataList
             for(var i = 0;i<this.last_all_data.length;i++){
                 this.last_all_data[i].queryTime = this.last_all_data[i].queryTime.substring(0,13);
             }

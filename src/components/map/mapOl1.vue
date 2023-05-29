@@ -17,7 +17,7 @@
 import { tsThisType } from '@babel/types';
 // import { ol } from 'dist/static/libs/ol5/ol';
 import bus from '../../utils'
-import {layer_point_index,select_source,baseurl,GaodeMap_img_wms,TiandiMap_img,TiandiMap_cia,TiandiMap_vec,TiandiMap_cva,GaodeMap_img_wms_old} from '../../assets/js/config_data'
+import {layer_point_index,select_source,baseurl} from '../../assets/js/config_data'
 import {mousePositionControl} from '../../assets/js/map_control_tool'
 import port from '../../assets/js/port'
 // import MousePosition from "ol/control/MousePosition";
@@ -51,7 +51,7 @@ export default {
             //选中变换的样式
            
             //列表,在加载时导入[]
-            buoyList: []
+            fishing_port_list: []
             // selected_name : null
         };
     },
@@ -101,7 +101,7 @@ export default {
                     //基准线
                     textBaseline: 'middle',
                     //文字样式
-                    font: 'normal 14px 微软雅黑',
+                    font: 'normal 16px 微软雅黑',
                     //文本内容
                     text: feature.get('name'),
                     //文本填充样式（即文字颜色）
@@ -144,7 +144,7 @@ export default {
             //矢量标注图层
             var vectorLayer = new ol.layer.Vector({
                 source: vectorSource,
-                name:'观测点位矢量图层'
+                name:'点位矢量图层'
             });
             this.map.addLayer(vectorLayer);
             
@@ -248,13 +248,13 @@ export default {
             url: this.url_load_config,//提交地址
             params: {}}).then((res) => {
                 if(100 == res.data.commonResultCode.code){
-                    this.buoyList = res.data.observeConfigList
-                    // alert(this.buoyList[0].name)
-                    // alert(this.buoyList[0].lat)
+                    this.fishing_port_list = res.data.fishingPortConfigList
+                    // alert(this.fishing_port_list[0].name)
+                    // alert(this.fishing_port_list[0].lat)
 
                 // vectorSource.clear
-                for (var i = 0; i < this.buoyList.length; i++) {
-                    var user = this.buoyList[i];
+                for (var i = 0; i < this.fishing_port_list.length; i++) {
+                    var user = this.fishing_port_list[i];
                     var loc = [user.lon, user.lat]
                     
                     var point = ol.proj.fromLonLat(loc);
@@ -280,8 +280,8 @@ export default {
         //更新指定用户的数据
         updateSelectClientInfo(name){
             // console.log('选中'+name)
-             for (var i = 0; i < this.buoyList.length; i++) {
-                var user = this.buoyList[i];
+             for (var i = 0; i < this.fishing_port_list.length; i++) {
+                var user = this.fishing_port_list[i];
                 if(user.name == name){
                     bus.emit('changeActive', {'active':1, 'name':name} );
                     break
@@ -310,11 +310,11 @@ export default {
                 //地图视图设置
                 view: new ol.View({
                     //地图初始中心点
-                    center: ol.proj.transform([130, 27], 'EPSG:4326', 'EPSG:3857'),
+                    center: ol.proj.transform([130, 30], 'EPSG:4326', 'EPSG:3857'),
                     //地图初始显示级别
                     zoom: 5,
                     minZoom:4,
-                    maxZoom:11
+                    maxZoom:13
 
 
                 }),
@@ -383,7 +383,7 @@ export default {
         moveToChinaSea(){
             //单击平移按钮
             var view = this.map.getView()
-            var wh = ol.proj.fromLonLat([130,27])
+            var wh = ol.proj.fromLonLat([130,30])
             view.setCenter(wh)
             view.setZoom(5)
             
