@@ -29,7 +29,7 @@ export default {
              // 菜单栏数据
              menus: [
                 { title: '地图复位' },
-                { title: '港口显隐'}
+                // { title: '港口显隐'}
 
             ],
             url_load_config : 'http://' + baseurl + ':8085/config/all',
@@ -81,7 +81,7 @@ export default {
                 image: new ol.style.Icon(
                     /** @type {olx.style.IconOptions} */
                     ({
-                        anchor: [0.5, 30],
+                        anchor: [0.5, 35],
                         anchorOrigin: 'top-right',
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
@@ -101,7 +101,7 @@ export default {
                     //基准线
                     textBaseline: 'middle',
                     //文字样式
-                    font: 'normal 16px 微软雅黑',
+                    font: 'normal 18px 微软雅黑',
                     //文本内容
                     text: feature.get('name'),
                     //文本填充样式（即文字颜色）

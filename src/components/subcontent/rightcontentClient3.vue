@@ -76,6 +76,7 @@
 // import { Datepicker, Timepicker, DatetimePicker, DateRangePicker } from '@livelybone/vue-datepicker';
 import bus from '../../utils'
 import common from '../../assets/js/common'
+import {markline_wave} from '../../assets/js/echart_style'
 import {baseurl}  from '../../assets/js/config_data'
 
 // import { Search } from '@element-plus/icons-vue'
@@ -404,7 +405,7 @@ export default {
                 yAxis: [
                     {
                         type: "value",
-                        splitLine: { show: true, lineStyle: { opacity: 0.5, type: "dashed" } },
+                        splitLine: { show: false, lineStyle: { opacity: 0.5, type: "dashed" } },
                         axisLabel: {
                             textStyle: {
                                 color: "#FFFFFF",
@@ -477,7 +478,8 @@ export default {
                                 }
                             }
                         },
-                        data: this.option_ele
+                        data: this.option_ele,
+                        markLine: markline_wave
                         // data:[3,2,4,1,3]
                     }
                 ],

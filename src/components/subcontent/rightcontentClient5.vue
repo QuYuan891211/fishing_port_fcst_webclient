@@ -38,6 +38,7 @@
 <script>
 import bus from '../../utils'
 import common from '../../assets/js/common'
+import {markline_wave} from '../../assets/js/echart_style'
 import {baseurl}  from '../../assets/js/config_data'
 export default {
     name: 'subContent7',
@@ -55,7 +56,7 @@ export default {
             unit:null,
             title:"未来120小时",
             name_ele:null,
-            default_time : 31,
+            default_time : 5,
             selected_name:null,
             all_ele_data_30:null,
             // date_format_str: 'dd HH',
@@ -169,7 +170,7 @@ export default {
                 yAxis: [
                     {
                         type: 'value',
-                        splitLine: { show: true,  lineStyle:{opacity:0.5,type: 'dashed'}},
+                        splitLine: { show: false,  lineStyle:{opacity:0.5,type: 'dashed'}},
                         axisLabel: {
                             textStyle: {
                                 color: '#FFFFFF',
@@ -211,7 +212,7 @@ export default {
                         },
                         data: this.data_arr_30
                     },
-                                        {
+                    {
                         name: this.name_option_ele,
                         type: "line",
                         // stack: "总量",
@@ -242,10 +243,13 @@ export default {
                                 }
                             }
                         },
-                        data: this.option_ele
+                        data: this.option_ele,
                         // data:[3,2,4,1,3]
-                    }
+                        markLine: markline_wave
+                    },
+                    
                 ],
+                
                 animation: true,
                 animationThreshold: 2500,       // 动画元素阀值，产生的图形原素超过2500不出动画
                 addDataAnimation: true,         // 动态数据接口是否开启动画效果

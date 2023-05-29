@@ -38,6 +38,7 @@
 <script>
 import bus from '../../utils'
 import common from '../../assets/js/common'
+import {markline_wave} from '../../assets/js/echart_style'
 import {baseurl}  from '../../assets/js/config_data'
 export default {
     name: 'subContent6',
@@ -54,7 +55,7 @@ export default {
             name_option_ele: null,
             unit:null,
             name_ele:null,
-            default_time : 7,
+            default_time : 3,
             selected_name:null,
             all_ele_data_7:null,
             title:"未来72小时",
@@ -191,7 +192,7 @@ export default {
                 yAxis: [
                     {
                         type: 'value',
-                        splitLine:{ show: true,  lineStyle:{opacity:0.5,type: 'dashed'}},
+                        splitLine:{ show: false,  lineStyle:{opacity:0.5,type: 'dashed'}},
                         axisLabel: {
                             textStyle: {
                                 color: '#FFFFFF',
@@ -264,7 +265,8 @@ export default {
                                 }
                             }
                         },
-                        data: this.option_ele
+                        data: this.option_ele,
+                        markLine: markline_wave
                         // data:[3,2,4,1,3]
                     }
                 ],
