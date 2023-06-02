@@ -4,7 +4,7 @@
         <centerHeader1 />
 
         <!-- 左侧菜单模块 -->
-        <menu1 :showSign="active" ></menu1>
+        <!-- <menu1 :showSign="active" ></menu1> -->
 
         <!-- 总概览模块 -->
         <div v-show="active === 0" class="right-bar" :class="active === 0 ? 'fromRight' : ''"

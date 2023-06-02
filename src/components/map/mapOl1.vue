@@ -5,11 +5,18 @@
                 <div class="map-button">{{ item.title }}</div>
                 </div>
         </div>
+
         
         <!-- <div class="map-button" id="panto" @click="moveToChinaSea()"></button> -->
     </div>
     <div class="wrapper">
         <div class="map" id="olMap"></div>
+    </div>
+    <div class = "bottom-tool-bar">
+        <div class="slider-demo-block">
+            <!-- <span class="demonstration">Breakpoints displayed</span> -->
+    <el-slider v-model="time_line"  :step="24" show-stops :max=interval :marks="marks" :disabled = "time_line_disabled" :show-tooltip="true" :format-tooltip="formatTooltip"/>
+  </div>
     </div>
 
 </template>
@@ -17,9 +24,11 @@
 import { tsThisType } from '@babel/types';
 // import { ol } from 'dist/static/libs/ol5/ol';
 import bus from '../../utils'
-import {layer_point_index,select_source,baseurl} from '../../assets/js/config_data'
+
+import {layer_point_index,select_source,baseurl,interval,time_line_marks} from '../../assets/js/config_data'
 import {mousePositionControl} from '../../assets/js/map_control_tool'
 import port from '../../assets/js/port'
+import common from '../../assets/js/common'
 // import MousePosition from "ol/control/MousePosition";
 // import { format } from "ol/coordinate";
 
@@ -33,8 +42,22 @@ export default {
 
             ],
             url_load_config : 'http://' + baseurl + ':8085/config/all',
+            //请求地址
+            url_last_data:'http://' + baseurl + ':8085/fcst/getData',
             map: null,
-
+            data_arr_5:null,
+            interval: interval,
+            selected_ele : '有效波高',//有效波高
+            marks:time_line_marks,
+            time_line:0,
+            default_time : 5,
+            data_arr_5:[],
+            option_ele:[],
+            time_arr_5:[],
+            time_line_disabled: false,
+            tooltipText:null,
+            // time_arr_5:null,
+            all_ele_data_5: null,
             point_icon_style_path:'./static/images/label/icon32.png',
             point_selected_icon_style_path:'./static/images/label/icon32_selected.png',
             point_port_style_path:'./static/images/label/port_icon32_blue.png',
@@ -48,6 +71,7 @@ export default {
             layerName: new Array(),
             //图层可见属性数组
             layerVisibility: new Array(),
+
             //选中变换的样式
            
             //列表,在加载时导入[]
@@ -55,14 +79,89 @@ export default {
             // selected_name : null
         };
     },
+    created(){
+
+    },
     mounted() {
         // this.initBuoyData();
+        this.getData();
+        // this.initTools();
         this.initMap();
         this.initMarker();
-        this.initMarker_port()
+        this.initMarker_port();
+        // this.initTool();
 
     },
     methods: {
+        // initTools(){
+        //     this.tooltipText = getformatTooltip
+        // },
+        formatTooltip(val){
+            // if(interval != this.time_arr_5.length){
+            //     common.notification_error("预报产品时效有误，请联系系统管理员")
+            //     alert(this.time_arr_5.length)
+            // }
+            return this.time_arr_5[val]
+        },
+
+        getData(){
+            axios(
+                {
+            method: 'get',//提交方法
+            url: this.url_last_data,//提交地址
+            params: {//提交参数
+                
+                days:this.default_time
+                // name:this.selected_name
+                // timestamp:t
+            }}).then((res) => {
+                // console.log('30天' + res.data.fcstDataList[0].site)
+                // this.initLineChart()
+                if("100" == res.data.commonResultCode.code){
+                    this.all_ele_data_5 = res.data.fcstDataList
+                    //如果数据给的不全，就不显示数据
+                    if(interval != this.all_ele_data_5.length){
+                        common.notification_error("预报产品时效有误，请联系系统管理员")
+                        // alert(this.all_ele_data_5.length)
+                        this.time_line_disabled = true
+                        return
+                        }
+                    //放入总线
+                    bus.emit("all_ele_data_5", this.all_ele_data_5);
+                    for(var i=0;i<this.all_ele_data_5.length;i++){
+                        // common.text()
+                       
+                        // this.data_arr_30 = this.all_ele_data_30
+                        this.data_arr_5.push(common.getSigleEleValue(this.selected_ele, this.all_ele_data_5[i]))
+                        // alert(item.queryTime)
+                        this.time_arr_5.push(this.all_ele_data_5[i].queryTime.substring(5,13))
+                        // alert('时间' + item.queryTime)
+
+                         //假如最大波高曲线同时显示
+                        if("有效波高"== this.selected_ele){
+                        this.option_ele.push(common.getOptionalEleValue(this.selected_ele, this.all_ele_data_5[i]));
+                        this.name_option_ele = "最大波高";
+                        }
+                    }
+                    // alert(this.time_arr_5.length)
+                } else if ("400" == res.data.commonResultCode.code) {
+                    common.notification_error(res.data.commonResultCode.message);
+                    this.all_ele_data_5 = []
+      
+                }
+                else if ("500" == res.data.commonResultCode.code) {
+                    common.notification_warning(res.data.commonResultCode.message)
+                    this.all_ele_data_5 = []
+
+                }
+                else if ("600" == res.data.commonResultCode.code) {
+                    common.notification_warning(res.data.commonResultCode.message)
+                    this.all_ele_data_5 = []
+
+                }
+
+            })
+        },
         //港口点位显隐按钮
         portLayerVisibilityControl(){
             port.setInvisibility(this.map)
@@ -314,7 +413,7 @@ export default {
                     //地图初始显示级别
                     zoom: 5,
                     minZoom:4,
-                    maxZoom:13
+                    maxZoom:9
 
 
                 }),
@@ -392,7 +491,71 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+/* 时间滑块 */
+.bottom-tool-bar .slider-demo-block {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+.bottom-tool-bar .slider-demo-block .el-slider {
+  margin-top: 0;
+  margin-left: 12px;
+}
+/* 时间轴标注样式 */
+.el-slider__marks-text {
+  margin-top: 0;
+  /* top: -50%; */
+  top:150%;
+  color: #fff;
+  font-size: 120%;
+  /* font-weight: 200; */
+}
+
+.el-slider__stop {
+    /* width: 150%; */
+    background-color: #fff;
+    border: solid 2px #21b2c3;
+    transform: translateX(-50%) translateY(-25%);
+      }
+.el-slider__tooltip {
+    text-align: left;
+    font-size: larger;
+    background-color: #fff;
+  }
+  .el-slider__tooltip-wrapper {
+      height: 32px;
+      transform: translateX(-50%);
+      top: -50%;
+    }
+/* .bottom-tool-bar .slider-demo-block .demonstration {
+  font-size: 14px;
+  color: var(--el-text-color-secondary);
+  line-height: 44px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 0;
+} */
+
+.bottom-tool-bar .slider-demo-block .demonstration + .el-slider {
+  flex: 0 0 70%;
+}
+
+.bottom-tool-bar {
+    display: flex;
+    position: absolute;
+    justify-content: start;
+    flex-direction:row;
+    /* left:0; */
+    top:90%;
+    left:5%;
+    width: 70%;
+    
+    z-index: 10;
+    /* pointer-events: none; */
+}
 .map {
     width: 100%;
     height: 100vh;
@@ -410,6 +573,8 @@ export default {
     /* left:0; */
     top: 100px;
     z-index: 5;
+    left:1%;
+    width: 100%;
     /* pointer-events: none; */
 }
 .left-tool-bar .menus-item {

@@ -20,7 +20,7 @@ import 'element-plus/theme-chalk/index.css'
 
 
 import locale from 'element-plus/lib/locale/lang/zh-cn'
-import {Search, Sort, Switch,Download} from '@element-plus/icons-vue'
+import {Search, Sort, Switch,Download, } from '@element-plus/icons-vue'
 //需要按需引入
 // import AFTableColumn from 'af-table-column'
 

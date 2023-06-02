@@ -47,6 +47,7 @@ export default {
              //观测数据信息
             //请求地址
             url_last_single_data:'http://' + baseurl + ':8085/fcst/lastSingle',
+            
             //观测数据信息
             data_arr_30:[],
             time_arr_30:[],

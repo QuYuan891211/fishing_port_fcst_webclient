@@ -14,9 +14,9 @@ var markline_wave = {
                        },
                            label:{
                            position:'end',
-                           formatter:"红色",
+                           formatter:"红",
                            color:"#df433c",// 颜色
-                           fontSize:'10'
+                           fontSize:'14'
                        },
                        yAxis:6         // 警戒线的标注值，可以有多个yAxis,多条警示线   或者采用   {type : 'average', name: '平均值'}，type值有  max  min  average，分为最大，最小，平均值
                       
@@ -31,9 +31,9 @@ var markline_wave = {
                        },
                        label:{
                            position:'end',
-                           formatter:"橙色",
+                           formatter:"橙",
                            color:"#FCB071",
-                           fontSize:'10'
+                           fontSize:'14'
                        },
                        yAxis:4.5           // 警戒线的标注值，可以有多个yAxis,多条警示线   或者采用   {type : 'average', name: '平均值'}，type值有  max  min  average，分为最大，最小，平均值
                  
@@ -48,9 +48,9 @@ var markline_wave = {
                     },
                     label:{
                         position:'end',
-                        formatter:"黄色",
+                        formatter:"黄",
                         color:"#FFD253",
-                        fontSize:'10'
+                        fontSize:'14'
                     },
                     yAxis:3.5           // 警戒线的标注值，可以有多个yAxis,多条警示线   或者采用   {type : 'average', name: '平均值'}，type值有  max  min  average，分为最大，最小，平均值
               
@@ -66,9 +66,9 @@ var markline_wave = {
                     },
                     label:{
                         position:'end',
-                        formatter:"蓝色",
+                        formatter:"蓝",
                         color:"#99D0D9",
-                        fontSize:'10'
+                        fontSize:'14'
                     },
                     yAxis:2.5           // 警戒线的标注值，可以有多个yAxis,多条警示线   或者采用   {type : 'average', name: '平均值'}，type值有  max  min  average，分为最大，最小，平均值
               

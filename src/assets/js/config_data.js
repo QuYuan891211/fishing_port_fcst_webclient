@@ -1,14 +1,25 @@
 //上线需修改：IP
 //dev
 let baseurl = 'localhost'
+let interval = 121
+
+let time_line_marks = 
+    {
+        //标记和样式设置
+        24: '24H',
+        48:'48H',
+        72:'72H',
+        96:'96H',
+        120:'120H'
+    }
 //pro
 // let baseurl = '128.5.9.127'
 
 //上线需修改：图层index
 //dev
-// let layer_point_index = 1
+let layer_point_index = 1
 //pro
-let layer_point_index = 2
+// let layer_point_index = 2
 
 
             let TiandiMap_vec = new ol.layer.Tile({
@@ -87,12 +98,16 @@ let layer_point_index = 2
 
 //上线需修改：source
 //dev-栅格
-let select_source = [TiandiMap_img, TiandiMap_cia]
+// let select_source = [TiandiMap_img, TiandiMap_cia]
 //dev2
 //dev-矢量
 // let select_source = [TiandiMap_vec, TiandiMap_cva]
 //pro
-// let select_source = [GaodeMap_img_wms]
+let select_source = [GaodeMap_img_wms]
+
+
+
+
 export {
     layer_point_index,
     select_source,
@@ -102,5 +117,7 @@ export {
     TiandiMap_img,
     TiandiMap_cia,
     TiandiMap_vec,
-    TiandiMap_cva
+    TiandiMap_cva,
+    interval,
+    time_line_marks,
 }

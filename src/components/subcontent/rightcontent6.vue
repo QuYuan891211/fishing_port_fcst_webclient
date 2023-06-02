@@ -5,7 +5,7 @@
         <div class="title">最新数据</div>
         <div class="last-data-bar">
         <el-table class="last-data-table"
-            :data="this.last_all_data"
+            :data="this.all_ele_data_5"
             :row-class-name="tableRowClassName"
             :header-cell-style="{
             background: '#003460',
@@ -63,6 +63,7 @@
     </div>
 </template>
 <script>
+import bus from '../../utils'
 import { ref } from 'vue'
 // import { allGeneratedPositionsFor } from '_@jridgewell_trace-mapping@0.3.17@@jridgewell/trace-mapping'
 import common from '../../assets/js/common'
@@ -76,7 +77,7 @@ export default {
             url_query_data: 'http://'+ baseurl+':8085/fcst/queryAll',
             data_wave:null,
             default_time:31,
-            last_all_data:[],
+            all_ele_data_5:[],
             // value1 : ref('')
             select_time : '',
             default_dateTimePicker_time:null
@@ -123,11 +124,11 @@ export default {
             // console.log('30天' + res.data.fcstDataList[0].site)
             // this.initLineChart()
             if(100 == res.data.commonResultCode.code){
-            this.last_all_data = res.data.fcstDataList
-            for(var i = 0;i<this.last_all_data.length;i++){
-                this.last_all_data[i].queryTime = this.last_all_data[i].queryTime.substring(0,13);
+            this.all_ele_data_5 = res.data.fcstDataList
+            for(var i = 0;i<this.all_ele_data_5.length;i++){
+                this.all_ele_data_5[i].queryTime = this.all_ele_data_5[i].queryTime.substring(0,13);
             }
-            // bus.emit('lastAll', this.last_all_data);
+            // bus.emit('lastAll', this.all_ele_data_5);
             }else if ("400" == res.data.commonResultCode.code) {
                     common.notification_error(res.data.commonResultCode.message);
                     this.select_time = ''
@@ -153,11 +154,11 @@ export default {
             // console.log('30天' + res.data.fcstDataList[0].site)
             // this.initLineChart()
             if(100 == res.data.commonResultCode.code){
-            this.last_all_data = res.data.fcstDataList
-            for(var i = 0;i<this.last_all_data.length;i++){
-                this.last_all_data[i].queryTime = this.last_all_data[i].queryTime.substring(0,13);
+            this.all_ele_data_5 = res.data.fcstDataList
+            for(var i = 0;i<this.all_ele_data_5.length;i++){
+                this.all_ele_data_5[i].queryTime = this.all_ele_data_5[i].queryTime.substring(0,13);
             }
-            // bus.emit('lastAll', this.last_all_data);
+            // bus.emit('lastAll', this.all_ele_data_5);
             }else if ("400" == res.data.commonResultCode.code) {
                     common.notification_error(res.data.commonResultCode.message);
                 }
@@ -304,6 +305,13 @@ export default {
         // alert(this.default_dateTimePicker_time)
         this.getLastAllData()
         // this.getBarChart();
+        bus.on('all_ele_data_5', val =>{
+
+        this.all_ele_data_5 = val
+        })
+    },
+    beforeDestroy () {
+            bus.off('select_feature')
     },
 }
 </script>
