@@ -1,7 +1,7 @@
 <template>
   <!-- 学校基本信息 -->
   <div class="sub-content-info">
-    <div class=title>数据总览</div>
+    <div class=title>预报产品信息</div>
     <div style="display:flex">
       <div style="padding-left: 30px;">
         <div style="display:flex">
@@ -9,8 +9,8 @@
             <img class="area-icon" src="@/assets/build.png" alt="">
           </div>
           <div style="margin-bottom:1%;">
-            <div class="subtitle">当前浮标数量</div>
-            <div class="content">29 <span class="unit">个</span></div>
+            <div class="subtitle">预报模型</div>
+            <div class="content">国家海洋环境预报中心西北太海浪数值预报系统 </div>
           </div>
         </div>
         <div style="display:flex;margin-bottom:1%">
@@ -18,8 +18,8 @@
             <img class="build-icon" src="@/assets/build.png" alt="">
           </div>
           <div>
-            <div class="subtitle">当前海洋站数量</div>
-            <div class="content">0 <span class="unit">个</span></div>
+            <div class="subtitle">预报时效 / 时间分辨率</div>
+            <div class="content">120小时 / 逐小时 </div>
           </div>
         </div>
         <div style="display:flex;margin-bottom:1%">
@@ -27,8 +27,8 @@
             <img class="build-icon" src="@/assets/build.png" alt="">
           </div>
           <div>
-            <div class="subtitle">当前志愿船数量</div>
-            <div class="content">0 <span class="unit">种</span></div>
+            <div class="subtitle">当前预报数据源</div>
+            <div class="content">NMF202301012000_120001_WAV_00</div>
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default {
 }
 
 .sub-content-info .content {
-  font-size: 20px;
+  font-size: 16px;
   line-height: 34px;
   color: #ffffff;
 }
@@ -119,7 +119,7 @@ export default {
   height: 180px;
   position: absolute;
   top: 30%;
-  left: 30%;
+  left: 20%;
 }
 
 

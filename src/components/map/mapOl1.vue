@@ -101,7 +101,12 @@ export default {
             //     common.notification_error("预报产品时效有误，请联系系统管理员")
             //     alert(this.time_arr_5.length)
             // }
-            return this.time_arr_5[val]
+            if(null == this.time_arr_5[val]){
+                return "此时次无预报数据"
+            }else{
+                return this.time_arr_5[val]
+            }
+            
         },
 
         getData(){
@@ -120,8 +125,8 @@ export default {
                 if("100" == res.data.commonResultCode.code){
                     this.all_ele_data_5 = res.data.fcstDataList
                     //如果数据给的不全，就不显示数据
-                    if(interval != this.all_ele_data_5.length){
-                        common.notification_error("预报产品时效有误，请联系系统管理员")
+                    if(0 == this.all_ele_data_5.length){
+                        common.notification_error("预报产品加载错误，请联系系统管理员")
                         // alert(this.all_ele_data_5.length)
                         this.time_line_disabled = true
                         return
@@ -136,7 +141,7 @@ export default {
                         // alert(item.queryTime)
                         this.time_arr_5.push(this.all_ele_data_5[i].queryTime.substring(5,13))
                         // alert('时间' + item.queryTime)
-
+                        // this.interval = this.time_arr_5.length
                          //假如最大波高曲线同时显示
                         if("有效波高"== this.selected_ele){
                         this.option_ele.push(common.getOptionalEleValue(this.selected_ele, this.all_ele_data_5[i]));
