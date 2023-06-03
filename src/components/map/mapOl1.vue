@@ -74,8 +74,8 @@ export default {
             tooltipText:null,
             // time_arr_5:null,
             all_ele_data_5: null,
-            point_icon_style_path:'./static/images/label/icon32.png',
-            point_selected_icon_style_path:'./static/images/label/icon32_selected.png',
+            point_icon_style_path:'./static/images/label/icon32_overlay.png',
+            point_selected_icon_style_path:'./static/images/label/icon32_overlay_selected.png',
             point_port_style_path:'./static/images/label/port_icon32_blue.png',
             point_port_data_path:'/static/data/portjson/port_v2.json',
 
@@ -134,7 +134,7 @@ export default {
             for (var i = 0; i < this.fishing_port_list.length; i++) {
             var father = document.getElementById("overlay-block");
             //获取当前port的overlay元素的id
-            var child = document.createElement('div');
+            var child = document.createElement('el-card');
                         child.className = this.gernerateId(this.fishing_port_list[i].id); 
                         // child.innerHTML = "This is a test";
                         // console.log(child.nodeType())
@@ -168,7 +168,7 @@ export default {
                             {
                                 id: user.name,
                                 element: ele, //绑定html中的元素
-                                offset: [20, -20],
+                                offset: [0, -20],
                                 // offset: [0, 0], //像素偏移量
                                 position: point,
                                 positioning: "center-center",
@@ -262,7 +262,7 @@ export default {
                 image: new ol.style.Icon(
                     /** @type {olx.style.IconOptions} */
                     ({
-                        anchor: [0.5, 35],
+                        anchor: [0.5, 40],
                         anchorOrigin: 'top-right',
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
@@ -651,7 +651,7 @@ export default {
     height: 100vh;
 
 }
-.map.ol-viewport.maker{
+/* .map.ol-viewport.maker{
     width: 200px;
     height: 40px;
     line-height: 40px;
@@ -659,21 +659,21 @@ export default {
     color: yellow;
     text-align: center;
     font-size: 20px;
-}
+} */
 
 /* TODO:不起作用 */
 .ol-zoom .ol-zoom-in {
     display:none;
 }
 .overlay {
-    width: 200px;
+    width: 100px;
     height: 40px;
     line-height: 40px;
-    background: burlywood;
-    color: yellow;
+    background: url(@/assets/no-select-overlay.png);
+    color: white;
     text-align: center;
     font-size: 20px;
-
+    border-radius: 10px;
 
 }
 /* .ol-overlay {
