@@ -6,12 +6,27 @@
                 </div>
         </div>
 
-        
-        <!-- <div class="map-button" id="panto" @click="moveToChinaSea()"></button> -->
     </div>
     <div class="wrapper">
-        <div class="map" id="olMap"></div>
+        <div class="map" id="olMap">
+
+        </div>
+
+
+
     </div>
+
+    <!-- 叠置层 -->
+    <div id="overlay-block">   
+         <!-- <div v-for="item in fishing_port_list" :id="gernerateId(item.id)" title="Marker" class="marker">
+            测试测试测试测试
+    </div> -->
+    </div>
+
+
+
+
+
     <div class = "bottom-tool-bar">
         <div class="slider-demo-block">
             <!-- <span class="demonstration">Breakpoints displayed</span> -->
@@ -21,7 +36,7 @@
 
 </template>
 <script>
-import { tsThisType } from '@babel/types';
+// import { tsThisType } from '@babel/types';
 // import { ol } from 'dist/static/libs/ol5/ol';
 import bus from '../../utils'
 
@@ -29,6 +44,7 @@ import {layer_point_index,select_source,baseurl,interval,time_line_marks} from '
 import {mousePositionControl} from '../../assets/js/map_control_tool'
 import port from '../../assets/js/port'
 import common from '../../assets/js/common'
+// import { ol } from 'public/static/libs/ol5/ol';
 // import MousePosition from "ol/control/MousePosition";
 // import { format } from "ol/coordinate";
 
@@ -90,9 +106,14 @@ export default {
         this.initMarker();
         this.initMarker_port();
         // this.initTool();
+        
 
     },
     methods: {
+        //动态生成叠置层id
+        gernerateId(id){
+            return "overlay_" + id
+        },
         // initTools(){
         //     this.tooltipText = getformatTooltip
         // },
@@ -108,7 +129,63 @@ export default {
             }
             
         },
+        addNode(){
+            // alert(this.fishing_port_list.length)
+            for (var i = 0; i < this.fishing_port_list.length; i++) {
+            var father = document.getElementById("overlay-block");
+            //获取当前port的overlay元素的id
+            var child = document.createElement('div');
+                        child.className = this.gernerateId(this.fishing_port_list[i].id); 
+                        // child.innerHTML = "This is a test";
+                        // console.log(child.nodeType())
 
+                        father.appendChild(child);
+            }
+                        // console.log('第'+i+'个father' + father)
+                        // console.log(father)
+            
+                        return child
+        },
+        initOverlay(){
+           
+            var child = this.addNode()
+            for (var i = 0; i < this.fishing_port_list.length; i++) {
+                        var user = this.fishing_port_list[i];
+                        var loc = [user.lon, user.lat]
+                         
+                        var point = ol.proj.fromLonLat(loc);
+                        
+                        
+                        let element_classname = this.gernerateId(this.fishing_port_list[i].id)
+                        // div.id = element_id
+                        // console.log(element_id)
+                    //创建叠置层（overlay）要素
+                        let ele = document.getElementsByClassName(element_classname)[0]
+                        // console.log('ele')
+                        // console.log(ele)
+                        // let ele = document.getElementById('test')
+                        let overlay = new ol.Overlay(
+                            {
+                                id: user.name,
+                                element: ele, //绑定html中的元素
+                                offset: [20, -20],
+                                // offset: [0, 0], //像素偏移量
+                                position: point,
+                                positioning: "center-center",
+                                
+                                className:'overlay',
+                                // 是否要阻止事件冒泡到地图视口(map viewport)。
+                                // 如果设置为ture，那么叠置层被放在装载控件的那个div容器中（该div容器css类名为ol-overlaycontainer-stopevent）
+                                // 如果设置为false，那么叠置层被放在css类名为ol-overlaycontainer的div容器下，由className属性（默认为'ol-overlay-container ol-selectable'）指定类名的div容器中
+                                stopEvent: false
+                                // positioning: 'center-center',
+                            }
+                        )
+                        //添加到地图
+                        this.map.addOverlay(overlay)
+                        // console.log(overlay)
+            }
+        },
         getData(){
             axios(
                 {
@@ -242,8 +319,12 @@ export default {
             var vectorSource = new ol.source.Vector({
                 features: []
             });
-            
-            this.initFeature(vectorSource)
+
+            //因为要考虑到叠置层，这里传入map
+            this.initFeature(vectorSource, this.map)
+
+            //测试
+            console.log(this.map.getOverlays())
 
             //矢量标注图层
             var vectorLayer = new ol.layer.Vector({
@@ -346,33 +427,37 @@ export default {
         },
 
 
-        initFeature(vectorSource){
+        initFeature(vectorSource, map){
             axios(
-                {method: 'get',//提交方法
-            url: this.url_load_config,//提交地址
-            params: {}}).then((res) => {
-                if(100 == res.data.commonResultCode.code){
-                    this.fishing_port_list = res.data.fishingPortConfigList
+                {
+                    method: 'get',//提交方法
+                    url: this.url_load_config,//提交地址
+                    params: {}}).then((res) => {
+                    if(100 == res.data.commonResultCode.code){
+                        this.fishing_port_list = res.data.fishingPortConfigList
                     // alert(this.fishing_port_list[0].name)
                     // alert(this.fishing_port_list[0].lat)
 
                 // vectorSource.clear
-                for (var i = 0; i < this.fishing_port_list.length; i++) {
-                    var user = this.fishing_port_list[i];
-                    var loc = [user.lon, user.lat]
-                    
-                    var point = ol.proj.fromLonLat(loc);
-                    //实例化Vector要素,通过矢量图层添加到地图容器中
-                    var iconFeature = new ol.Feature({
-                        geometry: new ol.geom.Point(point),
-                        //名称属性
-                        name: user.name,
+                    for (var i = 0; i < this.fishing_port_list.length; i++) {
+                        var user = this.fishing_port_list[i];
+                        var loc = [user.lon, user.lat]
+                         
+                        var point = ol.proj.fromLonLat(loc);
 
-            //  
-                });
-                iconFeature.setStyle(this.createLabelStyle(iconFeature,false));
-                vectorSource.addFeature(iconFeature);
-            }
+                    //实例化Vector要素,通过矢量图层添加到地图容器中
+                        var iconFeature = new ol.Feature({
+                            geometry: new ol.geom.Point(point),
+                            //名称属性
+                            name: user.name,
+                        });
+                        iconFeature.setStyle(this.createLabelStyle(iconFeature,false));
+                        vectorSource.addFeature(iconFeature);
+                        
+   
+                        // console.log(iconFeature)
+                    }
+                    this.initOverlay();
         }else{
                     alert(res.data.commonResultCode.message)
                 }
@@ -564,12 +649,45 @@ export default {
 .map {
     width: 100%;
     height: 100vh;
+
+}
+.map.ol-viewport.maker{
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    background: burlywood;
+    color: yellow;
+    text-align: center;
+    font-size: 20px;
 }
 
 /* TODO:不起作用 */
 .ol-zoom .ol-zoom-in {
     display:none;
 }
+.overlay {
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    background: burlywood;
+    color: yellow;
+    text-align: center;
+    font-size: 20px;
+
+
+}
+/* .ol-overlay {
+            position: absolute;
+            background-color: #eeeeee;
+            -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 280px;
+        } */
 .left-tool-bar {
     display: flex;
     position: absolute;
