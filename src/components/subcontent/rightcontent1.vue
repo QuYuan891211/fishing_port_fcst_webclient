@@ -110,7 +110,7 @@ export default {
                 ],
                 color: [
                     '#21b2c3',
-                    'red',
+                    '#F53240',
                 ],
                 animation: true,
                 animationThreshold: 2500,       // 动画元素阀值，产生的图形原素超过2500不出动画

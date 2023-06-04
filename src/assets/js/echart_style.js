@@ -15,7 +15,8 @@ var markline_wave = {
                            label:{
                            position:'end',
                            formatter:"红",
-                           color:"#df433c",// 颜色
+                        //    color:"#df433c",// 颜色
+                            color: "#F53240",
                            fontSize:'14'
                        },
                        yAxis:6         // 警戒线的标注值，可以有多个yAxis,多条警示线   或者采用   {type : 'average', name: '平均值'}，type值有  max  min  average，分为最大，最小，平均值

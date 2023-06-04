@@ -2,10 +2,12 @@
 //dev
 let baseurl = 'localhost'
 let interval = 121
-
+let min_interval = 0
+let intervalMax = 120
 let time_line_marks = 
     {
         //标记和样式设置
+        0:'0H',
         24: '24H',
         48:'48H',
         72:'72H',
@@ -120,4 +122,6 @@ export {
     TiandiMap_cva,
     interval,
     time_line_marks,
+    min_interval,
+    intervalMax
 }

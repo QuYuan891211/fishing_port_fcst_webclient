@@ -29,8 +29,8 @@
 
     <div class = "bottom-tool-bar">
         <div class="slider-demo-block">
-            <!-- <span class="demonstration">Breakpoints displayed</span> -->
-    <el-slider v-model="time_line"  :step="24" show-stops :max=interval :marks="marks" :disabled = "time_line_disabled" :show-tooltip="true" :format-tooltip="formatTooltip"/>
+            <span class="demonstration">预报时次</span>
+    <el-slider v-model="time_line"  :step="24" show-stops  :min=min_interval :max=interval :marks="marks" :disabled = "time_line_disabled" :show-tooltip="true" :format-tooltip="formatTooltip"/>
   </div>
     </div>
 
@@ -40,10 +40,11 @@
 // import { ol } from 'dist/static/libs/ol5/ol';
 import bus from '../../utils'
 
-import {layer_point_index,select_source,baseurl,interval,time_line_marks} from '../../assets/js/config_data'
+import {layer_point_index,select_source,baseurl,interval,min_interval,time_line_marks,intervalMax} from '../../assets/js/config_data'
 import {mousePositionControl} from '../../assets/js/map_control_tool'
 import port from '../../assets/js/port'
 import common from '../../assets/js/common'
+import node from '../../assets/js/node_tool'
 // import { ol } from 'public/static/libs/ol5/ol';
 // import MousePosition from "ol/control/MousePosition";
 // import { format } from "ol/coordinate";
@@ -63,7 +64,12 @@ export default {
             map: null,
             data_arr_5:null,
             interval: interval,
+            intervalMax:intervalMax,
+            min_interval:min_interval,
             selected_ele : '有效波高',//有效波高
+            selected_ele_show : '浪高',//有效波高
+            unit:'m',
+            selected_time:0,
             marks:time_line_marks,
             time_line:0,
             default_time : 5,
@@ -74,6 +80,7 @@ export default {
             tooltipText:null,
             // time_arr_5:null,
             all_ele_data_5: null,
+            all_ybg_statics_data_5: null,
             point_icon_style_path:'./static/images/label/icon32_overlay.png',
             point_selected_icon_style_path:'./static/images/label/icon32_overlay_selected.png',
             point_port_style_path:'./static/images/label/port_icon32_blue.png',
@@ -111,9 +118,7 @@ export default {
     },
     methods: {
         //动态生成叠置层id
-        gernerateId(id){
-            return "overlay_" + id
-        },
+
         // initTools(){
         //     this.tooltipText = getformatTooltip
         // },
@@ -129,26 +134,10 @@ export default {
             }
             
         },
-        addNode(){
-            // alert(this.fishing_port_list.length)
-            for (var i = 0; i < this.fishing_port_list.length; i++) {
-            var father = document.getElementById("overlay-block");
-            //获取当前port的overlay元素的id
-            var child = document.createElement('el-card');
-                        child.className = this.gernerateId(this.fishing_port_list[i].id); 
-                        // child.innerHTML = "This is a test";
-                        // console.log(child.nodeType())
 
-                        father.appendChild(child);
-            }
-                        // console.log('第'+i+'个father' + father)
-                        // console.log(father)
-            
-                        return child
-        },
         initOverlay(){
-           
-            var child = this.addNode()
+            
+            node.addNode(this.fishing_port_list,this.all_ybg_statics_data_5,this.selected_time.toString(), this.selected_ele_show,'1.8',this.unit)
             for (var i = 0; i < this.fishing_port_list.length; i++) {
                         var user = this.fishing_port_list[i];
                         var loc = [user.lon, user.lat]
@@ -156,7 +145,7 @@ export default {
                         var point = ol.proj.fromLonLat(loc);
                         
                         
-                        let element_classname = this.gernerateId(this.fishing_port_list[i].id)
+                        let element_classname = node.gernerateId(this.fishing_port_list[i].id)
                         // div.id = element_id
                         // console.log(element_id)
                     //创建叠置层（overlay）要素
@@ -187,13 +176,16 @@ export default {
             }
         },
         getData(){
+            // const interval = [24,48,72,96,120]
+
             axios(
                 {
             method: 'get',//提交方法
             url: this.url_last_data,//提交地址
             params: {//提交参数
                 
-                days:this.default_time
+                days:this.default_time,
+                intervalMax:intervalMax
                 // name:this.selected_name
                 // timestamp:t
             }}).then((res) => {
@@ -201,29 +193,20 @@ export default {
                 // this.initLineChart()
                 if("100" == res.data.commonResultCode.code){
                     this.all_ele_data_5 = res.data.fcstDataList
+                    this.all_ybg_statics_data_5 = res.data.homeQueryResultList
                     //如果数据给的不全，就不显示数据
-                    if(0 == this.all_ele_data_5.length){
+                    if(0 == this.all_ele_data_5.length && 0 == all_ybg_statics_data_5.length){
                         common.notification_error("预报产品加载错误，请联系系统管理员")
                         // alert(this.all_ele_data_5.length)
                         this.time_line_disabled = true
                         return
                         }
                     //放入总线
-                    bus.emit("all_ele_data_5", this.all_ele_data_5);
+                    // bus.emit("all_ele_data_5", this.all_ele_data_5);
+                    bus.emit("all_ybg_statics_data_5", this.all_ybg_statics_data_5);
                     for(var i=0;i<this.all_ele_data_5.length;i++){
-                        // common.text()
-                       
-                        // this.data_arr_30 = this.all_ele_data_30
                         this.data_arr_5.push(common.getSigleEleValue(this.selected_ele, this.all_ele_data_5[i]))
-                        // alert(item.queryTime)
                         this.time_arr_5.push(this.all_ele_data_5[i].queryTime.substring(5,13))
-                        // alert('时间' + item.queryTime)
-                        // this.interval = this.time_arr_5.length
-                         //假如最大波高曲线同时显示
-                        if("有效波高"== this.selected_ele){
-                        this.option_ele.push(common.getOptionalEleValue(this.selected_ele, this.all_ele_data_5[i]));
-                        this.name_option_ele = "最大波高";
-                        }
                     }
                     // alert(this.time_arr_5.length)
                 } else if ("400" == res.data.commonResultCode.code) {
@@ -262,7 +245,7 @@ export default {
                 image: new ol.style.Icon(
                     /** @type {olx.style.IconOptions} */
                     ({
-                        anchor: [0.5, 40],
+                        anchor: [0.5, 30],
                         anchorOrigin: 'top-right',
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
@@ -618,16 +601,19 @@ export default {
       transform: translateX(-50%);
       top: -50%;
     }
-/* .bottom-tool-bar .slider-demo-block .demonstration {
-  font-size: 14px;
-  color: var(--el-text-color-secondary);
+.bottom-tool-bar .slider-demo-block .demonstration {
+  font-size: 18px;
+  font-weight: bold;
+  /* font:'normal 18px 微软雅黑' ; */
+  color: white;
   line-height: 44px;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-bottom: 0;
-} */
+  margin-right: -10%;
+}
 
 .bottom-tool-bar .slider-demo-block .demonstration + .el-slider {
   flex: 0 0 70%;
@@ -665,17 +651,59 @@ export default {
 .ol-zoom .ol-zoom-in {
     display:none;
 }
+
+/* 覆盖层样式 */
 .overlay {
-    width: 100px;
+    width: 80px;
     height: 40px;
     line-height: 40px;
-    background: url(@/assets/no-select-overlay.png);
-    color: white;
+    /* background: url(@/assets/overlay-1-test.png); */
+    
+    /* background-color: #a3b4c8; */
+    /* color: #F9F7F0; */
     text-align: center;
     font-size: 20px;
     border-radius: 10px;
-
+    /* position: relative; */
 }
+.card-header{
+    /* background-color:#cdcdcd; */
+    height: 15px;
+    line-height:15px;
+    /* 只把上半部分进行修改边框 */
+    border-radius: 10px 10px 0px 0px;
+    /* font-size: 10px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    font-size: 14px;
+    color: #ffff;
+    font-weight:bold;
+    /* text-align:center; */
+    /* position: absolute; */
+    /* bottom: px; */
+}
+.card-body{
+    /* background-color:#cdcdcd; */
+    /* height: 15px; */
+    /* 只把上半部分进行修改边框 */
+    border-radius: 0px 0px 10px 10px;
+    /* font-size: 10px; */
+    display: flex;
+    justify-content: center;
+    align-items:flex-start;
+    line-height: 25px;
+    /* text-align: center; */
+    font-size: 14px;
+    background: #F9F7F0;
+    color: #072A40;
+    font-weight:bold;
+    /* text-align:center; */
+    /* position: absolute; */
+    /* bottom: px; */
+}
+
 /* .ol-overlay {
             position: absolute;
             background-color: #eeeeee;
