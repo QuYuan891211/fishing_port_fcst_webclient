@@ -4,6 +4,14 @@ let baseurl = 'localhost'
 let interval = 121
 let min_interval = 0
 let intervalMax = 120
+//警报颜色配置
+let red_warning_color = '#F53240'
+let orange_warning_color = '#F47000'
+let yellow_warning_color = '#F9BE02'
+let blue_warning_color = '#008F95'
+let no_warning_color = '#A5A5AF'
+
+
 let time_line_marks = 
     {
         //标记和样式设置
@@ -123,5 +131,10 @@ export {
     interval,
     time_line_marks,
     min_interval,
-    intervalMax
+    intervalMax,
+    red_warning_color,
+    orange_warning_color,
+    yellow_warning_color,
+    blue_warning_color,
+    no_warning_color
 }

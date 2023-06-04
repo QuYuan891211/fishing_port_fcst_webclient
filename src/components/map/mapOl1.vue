@@ -157,7 +157,7 @@ export default {
                             {
                                 id: user.name,
                                 element: ele, //绑定html中的元素
-                                offset: [0, -20],
+                                offset: [0, -25],
                                 // offset: [0, 0], //像素偏移量
                                 position: point,
                                 positioning: "center-center",
@@ -245,12 +245,12 @@ export default {
                 image: new ol.style.Icon(
                     /** @type {olx.style.IconOptions} */
                     ({
-                        anchor: [0.5, 30],
+                        anchor: [0.5, 40],
                         anchorOrigin: 'top-right',
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
                         offsetOrigin: 'top-right',
-                        // offset:[0,10],
+                        // offset:[0,0],
                         //图标缩放比例
                         // scale:0.5,
                         //透明度
@@ -654,9 +654,9 @@ export default {
 
 /* 覆盖层样式 */
 .overlay {
-    width: 80px;
-    height: 40px;
-    line-height: 40px;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
     /* background: url(@/assets/overlay-1-test.png); */
     
     /* background-color: #a3b4c8; */
@@ -668,8 +668,8 @@ export default {
 }
 .card-header{
     /* background-color:#cdcdcd; */
-    height: 15px;
-    line-height:15px;
+    height: 20px;
+    line-height:20px;
     /* 只把上半部分进行修改边框 */
     border-radius: 10px 10px 0px 0px;
     /* font-size: 10px; */
@@ -677,7 +677,7 @@ export default {
     justify-content: center;
     align-items: center;
     /* text-align: center; */
-    font-size: 14px;
+    font-size: 16px;
     color: #ffff;
     font-weight:bold;
     /* text-align:center; */
@@ -693,9 +693,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items:flex-start;
-    line-height: 25px;
+    line-height: 30px;
     /* text-align: center; */
-    font-size: 14px;
+    font-size: 16px;
     background: #F9F7F0;
     color: #072A40;
     font-weight:bold;
