@@ -2,15 +2,15 @@ export default {
     gernerateId(id){
         return "overlay_" + id
     },
-    addNode(fishing_port_list, all_ybg_statics_data_5,header_text,ele, body_text,unit){
-    var header_text = header_text + 'H'
+    addNode(fishing_port_list, all_ybg_statics_data_5, selected_time, ele,unit){
+    var header_text = selected_time.toString() + 'H'
     // alert(this.fishing_port_list.length)
     for (var i = 0; i < fishing_port_list.length; i++) {
-    var father = document.getElementById("overlay-block");
+        var father = document.getElementById("overlay-block");
     //获取当前port的overlay元素的id
         var child1 = document.createElement('el-card');
         child1.className = this.gernerateId(fishing_port_list[i].id); 
-  
+        
         //ch1_1 header:对头部框颜色进行初始化（根据警报颜色）
         var child1_1 = document.createElement('div');
         child1_1.className = "card-header"
@@ -28,10 +28,21 @@ export default {
         var child1_2 = document.createElement('div');
         child1_2.className = "card-body"
 
-        
-        //ch1_2_1 body文字（例如有效波高）
+        var body_text = 0
+        //[TO-DO] 有待改进，代码过于复杂  ch1_2_1 body文字（例如有效波高）
         var child1_2_1 = document.createElement('span');
-        child1_2_1.innerHTML=ele + ': ' + body_text+ unit
+        for(var j = 0; j< all_ybg_statics_data_5.length;j++){
+            if(fishing_port_list[i].name == all_ybg_statics_data_5[j].site){
+                var time_statis = all_ybg_statics_data_5[j].timeLevelResultList
+                for(var k = 0; k<time_statis.length;k++){
+                    if(selected_time == time_statis[k].timeLevel){
+                        body_text = String(time_statis[k].max)
+                        
+                    }
+                }
+            }
+        }
+        child1_2_1.innerHTML=ele + ': ' + body_text + unit
 
         //二级加三级
         child1_1.appendChild(child1_1_1)

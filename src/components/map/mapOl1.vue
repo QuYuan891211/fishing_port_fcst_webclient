@@ -137,7 +137,7 @@ export default {
 
         initOverlay(){
             
-            node.addNode(this.fishing_port_list,this.all_ybg_statics_data_5,this.selected_time.toString(), this.selected_ele_show,'1.8',this.unit)
+            node.addNode(this.fishing_port_list, this.all_ybg_statics_data_5, this.selected_time, this.selected_ele_show,this.unit)
             for (var i = 0; i < this.fishing_port_list.length; i++) {
                         var user = this.fishing_port_list[i];
                         var loc = [user.lon, user.lat]
