@@ -15,12 +15,7 @@ export default {
         //ch1_1 header:对头部框颜色进行初始化（根据警报颜色）
         var child1_1 = document.createElement('div');
         child1_1.className = "card-header"
-        // child2.setAttribute("style", "background-color: #F53240;");
-        // child2.setAttribute("style", "background-color: #CDCDCD;");
-        // child2.setAttribute("style", "background-color: #535353;");
         
-
-
         //ch1_1_1 标题文字（例如24小时）
         var child1_1_1 = document.createElement('span');
         child1_1_1.innerHTML=header_text
