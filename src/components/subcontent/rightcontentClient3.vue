@@ -306,10 +306,10 @@ export default {
                 this.time_arr_24.push(this.all_ele_data_24[i].queryTime.substring(5,13));
                 // alert('时间' + item.queryTime)
                 //假如最大波高曲线同时显示
-                if("有效波高"== this.selected_ele){
-                    this.option_ele.push(common.getOptionalEleValue(this.selected_ele, this.all_ele_data_24[i]));
-                    this.name_option_ele = "最大波高";
-                }
+                // if("有效波高"== this.selected_ele){
+                //     this.option_ele.push(common.getOptionalEleValue(this.selected_ele, this.all_ele_data_24[i]));
+                //     this.name_option_ele = "最大波高";
+                // }
             }
             this.name_ele = this.selected_ele;
             // 重新加载图表

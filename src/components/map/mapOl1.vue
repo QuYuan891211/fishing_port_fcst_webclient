@@ -29,7 +29,7 @@
 
     <div class = "bottom-tool-bar">
         <div class="slider-demo-block">
-            <span class="demonstration">预报时次</span>
+            <span class="demonstration">预报时次：{{ fcst_time_show }}</span>
     <el-slider v-model="time_line"  :step="24" show-stops  :min=min_interval :max=interval :marks="marks" :disabled = "time_line_disabled" :show-tooltip="true" :format-tooltip="formatTooltip"/>
   </div>
     </div>
@@ -80,12 +80,12 @@ export default {
             tooltipText:null,
             // time_arr_5:null,
             all_ele_data_5: null,
-            all_ybg_statics_data_5: null,
+            all_ybg_statics_data_5: [],
             point_icon_style_path:'./static/images/label/icon32_overlay.png',
             point_selected_icon_style_path:'./static/images/label/icon32_overlay_selected.png',
             point_port_style_path:'./static/images/label/port_icon32_blue.png',
             point_port_data_path:'/static/data/portjson/port_v2.json',
-
+            fcst_time_show:null,
             parser: null,
             select_id:null,
             //map中的图层数组
@@ -103,11 +103,11 @@ export default {
         };
     },
     created(){
-
+        this.getData();
     },
     mounted() {
         // this.initBuoyData();
-        this.getData();
+
         // this.initTools();
         this.initMap();
         this.initMarker();
@@ -127,16 +127,22 @@ export default {
             //     common.notification_error("预报产品时效有误，请联系系统管理员")
             //     alert(this.time_arr_5.length)
             // }
+            // console.log(this.time_arr_5)
             if(null == this.time_arr_5[val]){
-                return "此时次无预报数据"
+                this.fcst_time_show = "此时次无预报产品"
+                return this.fcst_time_show
             }else{
-                return this.time_arr_5[val]
+                this.fcst_time_show = this.time_arr_5[val]
+                return this.fcst_time_show
             }
             
         },
 
         initOverlay(){
-            
+            if(this.fishing_port_list.length <1 && this.all_ybg_statics_data_5.length < 1){
+                common.message_error_data
+                return 
+            }
             node.addNode(this.fishing_port_list, this.all_ybg_statics_data_5, this.selected_time, this.selected_ele_show,this.unit)
             for (var i = 0; i < this.fishing_port_list.length; i++) {
                         var user = this.fishing_port_list[i];
@@ -204,24 +210,33 @@ export default {
                     //放入总线
                     // bus.emit("all_ele_data_5", this.all_ele_data_5);
                     bus.emit("all_ybg_statics_data_5", this.all_ybg_statics_data_5);
+                    var temp_arr= []
                     for(var i=0;i<this.all_ele_data_5.length;i++){
                         this.data_arr_5.push(common.getSigleEleValue(this.selected_ele, this.all_ele_data_5[i]))
-                        this.time_arr_5.push(this.all_ele_data_5[i].queryTime.substring(5,13))
+                        temp_arr.push(this.all_ele_data_5[i].queryTime)
+                        // temp_arr.push(this.all_ele_data_5[i].queryTime.substring(5,13))
                     }
+                    //给time_arr_5去重
+                    this.time_arr_5 = temp_arr.filter(function(item,index){
+                            return temp_arr.indexOf(item) === index;  // 因为indexOf 只能查找到第一个  
+                        });
+
                     // alert(this.time_arr_5.length)
                 } else if ("400" == res.data.commonResultCode.code) {
                     common.notification_error(res.data.commonResultCode.message);
                     this.all_ele_data_5 = []
+                    this.all_ybg_statics_data_5=[]
       
                 }
                 else if ("500" == res.data.commonResultCode.code) {
                     common.notification_warning(res.data.commonResultCode.message)
                     this.all_ele_data_5 = []
-
+                    this.all_ybg_statics_data_5=[]
                 }
                 else if ("600" == res.data.commonResultCode.code) {
                     common.notification_warning(res.data.commonResultCode.message)
                     this.all_ele_data_5 = []
+                    this.all_ybg_statics_data_5=[]
 
                 }
 
@@ -570,6 +585,7 @@ export default {
   display: flex;
   align-items: center;
   width: 50%;
+  flex-direction: column
 }
 .bottom-tool-bar .slider-demo-block .el-slider {
   margin-top: 0;
@@ -602,17 +618,18 @@ export default {
       top: -50%;
     }
 .bottom-tool-bar .slider-demo-block .demonstration {
-  font-size: 18px;
+  font-size: 27px;
   font-weight: bold;
   /* font:'normal 18px 微软雅黑' ; */
   color: white;
   line-height: 44px;
   flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
   white-space: nowrap;
-  margin-bottom: 0;
-  margin-right: -10%;
+  margin-bottom: 0%;
+  /* margin-bottom: 0; */
+  /* margin-right: 0%; */
 }
 
 .bottom-tool-bar .slider-demo-block .demonstration + .el-slider {
@@ -625,7 +642,7 @@ export default {
     justify-content: start;
     flex-direction:row;
     /* left:0; */
-    top:90%;
+    top:85%;
     left:5%;
     width: 70%;
     

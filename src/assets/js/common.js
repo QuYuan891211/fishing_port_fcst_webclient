@@ -52,6 +52,13 @@ message_disable_function(){
       type: 'error',
     })
 },
+message_error_data(){
+   ElMessage({
+      showClose: true,
+      message: '预报数据获取失败，请联系系统管理员.',
+      type: 'error',
+    })
+},
 notification_info(message){
    ElNotification({
       title: '消息',
