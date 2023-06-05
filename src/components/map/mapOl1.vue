@@ -32,7 +32,7 @@
             
             <span class="demonstration">发布时间：{{ release_time }}</span>
             <span class="demonstration">预报时间：{{ fcst_time_show }}</span>
-    <el-slider v-model="time_line"  :step="24" show-stops  :min=min_interval :max=interval :marks="marks" :disabled = "time_line_disabled" :show-tooltip="true" :format-tooltip="formatTooltip"/>
+    <el-slider v-model="time_line"  :step="24" show-stops  :min=min_interval :max=interval :marks="marks" :disabled = "time_line_disabled" :show-tooltip="false" :format-tooltip="formatTooltip"/>
   </div>
     </div>
 
@@ -129,22 +129,13 @@ export default {
         // },
         formatTooltip(val){
             
-            this.release_time = this.time_arr_5[this.min_interval] + '时'
+            this.release_time = this.time_arr_5[0] + '时'
 
             if(null == this.time_arr_5[val]){
                 this.fcst_time_show = "此时段无预报产品"
                 return this.fcst_time_show
             }else{
-                // this.fcst_time_show_pre = this.time_arr_5[val-24]
-                if(val != this.min_interval){
-                    this.fcst_time_show = this.time_arr_5[val-24] + '时' + ' —— ' + this.time_arr_5[val]+ '时' 
-                    
-                }else{
-                    
-                    this.fcst_time_show = this.time_arr_5[val] + '时'
-                }
-                // this.temp_time_line_val = val
-                // console.log( this.temp_time_line_val)
+                this.fcst_time_show = this.time_arr_5[val-24] + '时' + ' —— ' + this.time_arr_5[val]+ '时' 
                 this.reloadOverlay()
                 return this.time_arr_5[val]
             }

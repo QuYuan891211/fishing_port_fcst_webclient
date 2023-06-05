@@ -2,7 +2,7 @@
 //dev
 let baseurl = 'localhost'
 let interval = 121
-let min_interval = 0
+let min_interval = 24
 let intervalMax = 120
 //警报颜色配置
 let red_warning_color = '#F53240'
@@ -15,7 +15,7 @@ let no_warning_color = '#A5A5AF'
 let time_line_marks = 
     {
         //标记和样式设置
-        0:'0H',
+        // 0:'0H',
         24: '24H',
         48:'48H',
         72:'72H',
