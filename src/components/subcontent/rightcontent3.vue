@@ -18,8 +18,8 @@
             <img class="build-icon" src="@/assets/build.png" alt="">
           </div>
           <div>
-            <div class="subtitle">预报时效 / 时间分辨率</div>
-            <div class="content">120小时 / 逐小时 </div>
+            <div class="subtitle">模型起报时间</div>
+            <div class="content">2023-01-01 08:00</div>
           </div>
         </div>
         <div style="display:flex;margin-bottom:1%">
@@ -27,8 +27,9 @@
             <img class="build-icon" src="@/assets/build.png" alt="">
           </div>
           <div>
-            <div class="subtitle">当前预报数据源</div>
-            <div class="content">NMF202301012000_120001_WAV_00</div>
+            <div class="subtitle">预报时效 / 时间分辨率</div>
+            <div class="content">120小时 / 逐小时 </div>
+
           </div>
         </div>
       </div>

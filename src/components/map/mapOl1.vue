@@ -29,7 +29,8 @@
 
     <div class = "bottom-tool-bar">
         <div class="slider-demo-block">
-            <span class="demonstration">预报时次：{{ fcst_time_show }}</span>
+            <span class="demonstration">发布时间：{{ release_time }}</span>
+            <span class="demonstration">预报时间：{{ fcst_time_show }}</span>
     <el-slider v-model="time_line"  :step="24" show-stops  :min=min_interval :max=interval :marks="marks" :disabled = "time_line_disabled" :show-tooltip="true" :format-tooltip="formatTooltip"/>
   </div>
     </div>
@@ -76,6 +77,8 @@ export default {
             data_arr_5:[],
             option_ele:[],
             time_arr_5:[],
+            release_time:null,
+            // fcst_time_show_pre:null,
             time_line_disabled: false,
             tooltipText:null,
             // time_arr_5:null,
@@ -123,17 +126,25 @@ export default {
         //     this.tooltipText = getformatTooltip
         // },
         formatTooltip(val){
+
             // if(interval != this.time_arr_5.length){
             //     common.notification_error("预报产品时效有误，请联系系统管理员")
             //     alert(this.time_arr_5.length)
             // }
             // console.log(this.time_arr_5)
+            this.release_time = this.time_arr_5[this.min_interval] + '时'
             if(null == this.time_arr_5[val]){
-                this.fcst_time_show = "此时次无预报产品"
+                this.fcst_time_show = "此时段无预报产品"
                 return this.fcst_time_show
             }else{
-                this.fcst_time_show = this.time_arr_5[val]
-                return this.fcst_time_show
+                // this.fcst_time_show_pre = this.time_arr_5[val-24]
+                if(val != this.min_interval){
+                    this.fcst_time_show = this.time_arr_5[val-24] + '时' + ' —— ' + this.time_arr_5[val]+ '时' 
+                }else{
+                    this.fcst_time_show = this.time_arr_5[val] + '时'
+                }
+
+                return this.time_arr_5[val]
             }
             
         },
@@ -213,8 +224,8 @@ export default {
                     var temp_arr= []
                     for(var i=0;i<this.all_ele_data_5.length;i++){
                         this.data_arr_5.push(common.getSigleEleValue(this.selected_ele, this.all_ele_data_5[i]))
-                        temp_arr.push(this.all_ele_data_5[i].queryTime)
-                        // temp_arr.push(this.all_ele_data_5[i].queryTime.substring(5,13))
+                        // temp_arr.push(this.all_ele_data_5[i].queryTime)
+                        temp_arr.push(this.all_ele_data_5[i].queryTime.substring(5,13))
                     }
                     //给time_arr_5去重
                     this.time_arr_5 = temp_arr.filter(function(item,index){
@@ -583,7 +594,9 @@ export default {
 /* 时间滑块 */
 .bottom-tool-bar .slider-demo-block {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  /* justify-content: flex-start; */
+      align-items: flex-start;
   width: 50%;
   flex-direction: column
 }
@@ -593,6 +606,7 @@ export default {
 }
 /* 时间轴标注样式 */
 .el-slider__marks-text {
+  font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
   margin-top: 0;
   /* top: -50%; */
   top:150%;
@@ -618,12 +632,14 @@ export default {
       top: -50%;
     }
 .bottom-tool-bar .slider-demo-block .demonstration {
+  font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
   font-size: 27px;
   font-weight: bold;
   /* font:'normal 18px 微软雅黑' ; */
   color: white;
   line-height: 44px;
-  flex: 1;
+  /* flex: 1; */
+  /* margin-left: -50%; */
   /* overflow: hidden; */
   /* text-overflow: ellipsis; */
   white-space: nowrap;
@@ -639,10 +655,11 @@ export default {
 .bottom-tool-bar {
     display: flex;
     position: absolute;
-    justify-content: start;
+    /* justify-content: flex-start; */
+    /* align-items: flex-start; */
     flex-direction:row;
     /* left:0; */
-    top:85%;
+    top:80%;
     left:5%;
     width: 70%;
     
@@ -695,6 +712,7 @@ export default {
     align-items: center;
     /* text-align: center; */
     font-size: 16px;
+    font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
     color: #ffff;
     font-weight:bold;
     /* text-align:center; */
@@ -713,6 +731,7 @@ export default {
     line-height: 30px;
     /* text-align: center; */
     font-size: 16px;
+    font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
     background: #F9F7F0;
     color: #072A40;
     font-weight:bold;
