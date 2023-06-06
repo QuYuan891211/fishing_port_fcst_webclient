@@ -128,7 +128,7 @@ export default {
         //     this.tooltipText = getformatTooltip
         // },
         formatTooltip(val){
-            
+            console.log(this.time_line)
             this.release_time = this.time_arr_5[0] + '时'
 
             if(null == this.time_arr_5[val]){
@@ -666,7 +666,7 @@ export default {
     left:5%;
     width: 70%;
     
-    z-index: 10;
+    z-index: 2;
     /* pointer-events: none; */
 }
 .map {
@@ -762,7 +762,7 @@ export default {
     flex-direction:row;
     /* left:0; */
     top: 100px;
-    z-index: 5;
+    z-index: 2;
     left:1%;
     width: 100%;
     /* pointer-events: none; */

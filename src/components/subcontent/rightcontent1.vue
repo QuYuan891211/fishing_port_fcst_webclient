@@ -1,6 +1,6 @@
 <template>
 <div class="sub-content-info">
-    <div class=title>数据到报与要素统计</div>
+    <div class=title>数据监控与统计</div>
     <div style="display:flex;position:relative">
             <div style="width:40%;margin-left:2%">
                 <div ref="Echarts1" class="pie-chart" id="pieChart" style="width: 262px;height:180px;"></div>
@@ -10,19 +10,19 @@
                 <div class="static-list">
         
         <div class="static-bg-ele">
-          <div class="name">海浪要素</div>
-          <div style="color: #ffffff;font-size:23px;text-align: center;padding:3px 0;">9 <span
+          <div class="name">预报点位</div>
+          <div style="color: #ffffff;font-size:23px;text-align: center;padding:3px 0;">22 <span
+              style="color: #5cb2fa;font-size:14px;">个</span> </div>
+        </div>
+        <div class="static-bg-ele">
+          <div class="name">预报要素</div>
+          <div style="color: #ffffff;font-size:23px;text-align: center;padding:3px 0;">4 <span
               style="color: #5cb2fa;font-size:14px;">种</span> </div>
         </div>
         <div class="static-bg-ele">
-          <div class="name">气象要素</div>
-          <div style="color: #ffffff;font-size:23px;text-align: center;padding:3px 0;">6 <span
-              style="color: #5cb2fa;font-size:14px;">种</span> </div>
-        </div>
-        <div class="static-bg-ele">
-          <div class="name">海温要素</div>
-          <div style="color: #ffffff;font-size:23px;text-align: center;padding:3px 0;">2 <span
-              style="color: #5cb2fa;font-size:14px;">种</span> </div>
+          <div class="name">当前预报要素</div>
+          <div style="color: #ffffff;font-size:16px;text-align: center;padding:3px 0;">有效波高 <span
+              style="color: #5cb2fa;font-size:14px;"></span> </div>
         </div>
         
       </div>
@@ -64,7 +64,7 @@ export default {
 
                 })
                 },
-        // 取得男女比例饼状图数据
+
         getPieChart() {
             //直接引用进来使用
             var echarts = require('echarts');
@@ -103,8 +103,8 @@ export default {
                             show: false
                         },
                         data: [
-                            { value: this.success_num, name: '正常' },
-                            { value: 29-this.success_num, name: '缺报' },
+                            { value: this.success_num, name: '数据正常' },
+                            { value: 22-this.success_num, name: '数据未到' },
                         ],
                     },
                 ],
