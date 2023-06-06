@@ -10,8 +10,12 @@ let orange_warning_color = '#F47000'
 let yellow_warning_color = '#F9BE02'
 let blue_warning_color = '#008F95'
 let no_warning_color = '#A5A5AF'
-
-
+//redo警报颜色图片位置
+let red_warning_color_path = 'red.png'
+let orange_warning_color_path = 'orange.png'
+let yellow_warning_color_path = 'yellow.png'
+let blue_warning_color_path = 'blue.png'
+let no_warning_color_path = 'grey.png'
 let time_line_marks = 
     {
         //标记和样式设置
@@ -136,5 +140,10 @@ export {
     orange_warning_color,
     yellow_warning_color,
     blue_warning_color,
-    no_warning_color
+    no_warning_color,
+    red_warning_color_path,
+    orange_warning_color_path,
+    yellow_warning_color_path,
+    blue_warning_color_path,
+    no_warning_color_path
 }

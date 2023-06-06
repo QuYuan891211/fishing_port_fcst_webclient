@@ -177,7 +177,11 @@ export default {
                                 id: user.name,
                                 element: ele, //绑定html中的元素
                                 // offset: [0, -25],
-                                offset: [-50, -50],
+
+                                //当不设置浪高且图例为100*50时
+                                offset: [-35, -35],
+
+                                
                                 // offset: [0, 0], //像素偏移量
                                 position: point,
                                 // positioning: "center-center",
@@ -274,7 +278,9 @@ export default {
                 image: new ol.style.Icon(
                     /** @type {olx.style.IconOptions} */
                     ({
-                        anchor: [0.5, 40],
+                        anchor: [0.5, 29],
+                        //当不设置浪高且图例为100*50时
+                        // anchor: [0.5, 29],
                         anchorOrigin: 'top-right',
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
@@ -283,7 +289,7 @@ export default {
                         //图标缩放比例
                         // scale:0.5,
                         //透明度
-                        opacity: 1,
+                        opacity: 0.2,
                         //图标的url
                         src: is_selected?this.point_selected_icon_style_path:this.point_icon_style_path
                         // 
@@ -693,6 +699,7 @@ export default {
 .overlay {
     width: 100px;
     height: 50px;
+    
     line-height: 50px;
     /* background: url(@/assets/overlay-1-test.png); */
     
@@ -704,17 +711,21 @@ export default {
     /* position: relative; */
 }
 .card-header{
+    width: 100%;
+    /* background: url(@/assets/no-select.png); */
+    background-size: 100%;
     /* background-color:#cdcdcd; */
-    height: 20px;
-    line-height:20px;
+    height: 100%;
+    line-height:100%;
     /* 只把上半部分进行修改边框 */
-    border-radius: 10px 10px 0px 0px;
+    /* border-radius: 10px 10px 10px 10px; */
     /* font-size: 10px; */
+    /* background: url(); */
     display: flex;
     justify-content: center;
-    align-items: center;
-    /* text-align: center; */
-    font-size: 16px;
+    /* align-items:center; */
+    /* text-align: right; */
+    font-size: 18px;
     font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
     color: #ffff;
     font-weight:bold;
@@ -722,26 +733,22 @@ export default {
     /* position: absolute; */
     /* bottom: px; */
 }
-.card-body{
-    /* background-color:#cdcdcd; */
-    /* height: 15px; */
-    /* 只把上半部分进行修改边框 */
+/* .card-body{
+
     border-radius: 0px 0px 10px 10px;
-    /* font-size: 10px; */
+
     display: flex;
     justify-content: center;
     align-items:flex-start;
     line-height: 30px;
-    /* text-align: center; */
+
     font-size: 16px;
     font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
     background: #F9F7F0;
     color: #072A40;
     font-weight:bold;
-    /* text-align:center; */
-    /* position: absolute; */
-    /* bottom: px; */
-}
+
+} */
 
 /* .ol-overlay {
             position: absolute;
