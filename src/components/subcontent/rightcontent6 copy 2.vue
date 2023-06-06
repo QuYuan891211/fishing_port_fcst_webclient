@@ -3,92 +3,62 @@
         <!-- TODO:标题和时间放到同一行 -->
         <div class="title">警报信息</div>
         <div class="last-data-bar">
-            <div class="demo-collapse">
+        <el-table class="last-data-table"
+            :data="this.all_ele_data_5"
+            :row-class-name="tableRowClassName"
+            :header-cell-style="{
+            background: '#003460',
+            color: '#ffffff',
+            fontWeight: '1500',
+            fontSize: '16px',
+      }"
+      :cell-style="{
+            // background: '#003460',
+            color: '#ffffff',
+            fontWeight: '600',
+            fontSize: '14px',
+            
+      }"
 
-	<div>
-		<el-collapse v-model="activeNames" accordion>
-			<el-collapse-item v-for="(item, index) in list" :key="index" :name="index">
-				<template #title>
+        >
+        <el-table-column class="last-data-table-column"  align="center" prop="site" label="名称" />
+    <!-- <el-table-column class="last-data-table-column-time" align="center" prop="queryTime" label="时间"/> -->
+    <el-table-column class="last-data-table-column-time" align="center" prop="queryTime">
+        <!-- <el-button type="success" icon="el-icon-check" size="small" plain @click="select_time">
+              一键通过
+            </el-button> -->
+            <!-- 加入历史查看功能 -->
+            <template #header>
 
-                    <div>
-                        <img class="time-icon" src="@/assets/late.png" alt="">
-                    </div>
-					<span class="collapse-title flex" slot="title"
-						>{{ item.name }}
-					</span>
-                
-				</template>
-				<template #right-icon>
-					<el-icon><ele-CaretBottom /></el-icon>
-				</template>
-				<div>{{ item.content }}</div>
-			</el-collapse-item>
-		</el-collapse>
-	</div>
+            <el-date-picker
+                v-model="this.select_time"
+                type="datetime"
+                placeholder="选择时间"
+                @change="handleDateChange"
+                :default-value = this.default_dateTimePicker_time
+                @visible-change="visible_change($event)"
+                format = "MM-DD HH"
+                style="width:105px"
+                :clearable = false
+                :editable=false
+            />
+             </template>
+    </el-table-column>
 
-    <!-- <el-collapse v-model="activeName" accordion>
-      <el-collapse-item class="collapse-title" title="24H" name="1">
-        <div>
-            <img class="area-icon" src="@/assets/build.png" alt="">
-          </div>
-        <div>
-          Consistent with real life: in line with the process and logic of real
-          life, and comply with languages and habits that the users are used to;
-        </div>
-        <div>
-          Consistent within interface: all elements should be consistent, such
-          as: design style, icons and texts, position of elements, etc.
-        </div>
-      </el-collapse-item>
-      <el-collapse-item class="collapse-title" title="48H" name="2">
-        
-        <div>
-          Operation feedback: enable the users to clearly perceive their
-          operations by style updates and interactive effects;
-        </div>
-        <div>
-          Visual feedback: reflect current state by updating or rearranging
-          elements of the page.
-        </div>
-      </el-collapse-item>
-      <el-collapse-item class="collapse-title" title="72H" name="3">
-        <div>
-          Simplify the process: keep operating process simple and intuitive;
-        </div>
-        <div>
-          Definite and clear: enunciate your intentions clearly so that the
-          users can quickly understand and make decisions;
-        </div>
-        <div>
-          Easy to identify: the interface should be straightforward, which helps
-          the users to identify and frees them from memorizing and recalling.
-        </div>
-      </el-collapse-item>
-      <el-collapse-item class="collapse-title" title="96H" name="4">
-        <div>
-          Decision making: giving advices about operations is acceptable, but do
-          not make decisions for the users;
-        </div>
-        <div>
-          Controlled consequences: users should be granted the freedom to
-          operate, including canceling, aborting or terminating current
-          operation.
-        </div>
-      </el-collapse-item>
-      <el-collapse-item class="collapse-title" title="120H" name="5">
-        <div>
-          Decision making: giving advices about operations is acceptable, but do
-          not make decisions for the users;
-        </div>
-        <div>
-          Controlled consequences: users should be granted the freedom to
-          operate, including canceling, aborting or terminating current
-          operation.
-        </div>
-      </el-collapse-item>
-    </el-collapse> -->
-  </div>
-        </div>
+    <el-table-column class="last-data-table-column" align="center" prop="ybg" label="有效波高" />
+    <el-table-column class="last-data-table-column" align="center" prop="zbg" label="最大波高" />
+    <el-table-column class="last-data-table-column" align="center" prop="yzq" label="有效波周期" />
+    <el-table-column class="last-data-table-column" align="center" prop="bx" label="波向" />
+
+    <el-table-column class="last-data-table-column" align="center" prop="ws" label="风速" />
+    <el-table-column class="last-data-table-column" align="center" prop="wd" label="风向"/>
+    
+  </el-table>
+</div>
+        <!-- <div class="time">2022年11月18日08时</div> -->
+        <!-- <div>
+            <div ref="Echarts6" id="barChart" style="width: 100%;height:210px;"></div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -102,35 +72,6 @@ export default {
    
     data() {
         return {
-            list : [
-	{
-		name: '24小时预报',
-		id: 1,
-		content: '第一条内容',
-	},
-	{
-		name: '48小时预报',
-		id: 2,
-		content: '第二条内容',
-	},
-    {
-		name: '72小时预报',
-		id: 3,
-		content: '第三条内容',
-	},
-    {
-		name: '96小时预报',
-		id: 4,
-		content: '第四条内容',
-	},
-    {
-		name: '120小时预报',
-		id: 5,
-		content: '第五条内容',
-	},
-],
-
-            activeNames: [],
             url_last_data : 'http://'+ baseurl+':8085/fcst/filterlastAll',
             url_query_data: 'http://'+ baseurl+':8085/fcst/queryAll',
             data_wave:null,
@@ -227,6 +168,126 @@ export default {
             })
             },
         
+        getBarChart() {
+            //获取数值
+            this.data_wave = [0.7, 0.4, 0.8, 1.7, 1.9, 1.1, 0, 1.6];
+            let arr = [0.7, 0.4, 0.8, 1.7, 1.9, 1.1, 0, 1.6];
+            let max = arr.sort().reverse()[0];
+
+            // console.log('getBarChart');
+            //直接引用进来使用
+            var echarts = require('echarts');
+            // 基于准备好的dom，获取main节点init初始化echarts实例
+            var myChart = echarts.init(this.$refs.Echarts6);
+
+            var option;
+            option = {
+                //backgroundColor: 'rgba(1,202,217,.2)',
+                grid: {
+                    left: 60,
+                    right: 20,
+                    top: 45,
+                    bottom: 40
+                },
+                /**
+                toolbox: {
+                    feature: {
+                        dataView: { show: true, readOnly: false },
+                        magicType: { show: true, type: ['line', 'bar'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                legend: {
+                    top: 10,
+                    textStyle: {
+                        fontSize: 10,
+                        color: 'rgba(255,255,255,.7)'
+                    },
+                    data: ['实有人口', '实有房屋', '实有单位']
+                },*/
+                xAxis: [
+                    {
+                        type: 'category',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.2)'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.1)'
+                            }
+                        },
+                        axisLabel: {
+                            color: "rgba(255,255,255,.7)"
+                        },
+
+                        data: ['渤海', '黄海北部', '黄海南部', '东海北部', '东海南部', '南海北部', '南海中部', '南海南部'],
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    }
+                ],
+                yAxis: [
+                    {   show:true,
+                        position:'left', 
+                        offset:0, 
+                        type: 'value',
+                        name: '米',
+                        min: 0,
+                        // max: Math.max(this.data_wave),
+                        max:max,
+                        interval: max/5,
+                        axisLine: {
+                            show:true,
+                            // symbol:['none', 'arrow'],   //---是否显示轴线箭头
+                            // symbolSize:[3, 3] ,         //---箭头大小
+                            // symbolOffset:[0,3],         //---箭头位置
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.5)'
+                            }
+                        },
+                        splitLine: {
+                            show:true,
+                            lineStyle: {
+                                color: 'rgba(255,255,255,.5)'
+                            }
+                        },
+
+                        axisLabel: {
+
+
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: '有效波高',
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1,
+                                    [
+                                        { offset: 0, color: '#00f0ff' },
+                                        { offset: 1, color: '#032a72' }
+                                    ]
+                                )
+                            }
+                        },
+                        data: this.data_wave
+                    }
+                ],
+                tooltip: {
+          // 提示框组件
+          }
+            };
+
+            myChart.clear()
+            myChart.setOption(option)
+        },
     },
     created(){
         // var systemTime = new Date();
@@ -253,38 +314,7 @@ export default {
     },
 }
 </script>
-<style scoped>
-
-/deep/ .el-collapse-item__header{
-  font-size: 20px;
-  color: #fff;
-  font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
-  /* background-color: #178CA4; */
-  /* background-color: #072A40; */
-  background: url(../../assets/header-bg.png);
-}
-/deep/ .el-collapse-item__wrap{
-  font-size: 18px;
-  
-  font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
-  /* background-color: #178CA4; */
-  background-color: #178CA4;
-}
-
-/deep/ .el-collapse-item__content {
-      padding: 0;
-      color: #fff;
-      font-size: 16px;
-      font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
-    }
-/* 每个折叠栏标题前的图标 */
-.time-icon{
-  width: 60%;
-  height: 60%;
-  align-items: center;
-  margin-top: 20%;
-  margin-left: 10%;
-}
+<style>
 .sub-content-info-overview{
     width: 100%;
     margin-left: 1%;
