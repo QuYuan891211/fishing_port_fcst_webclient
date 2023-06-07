@@ -453,6 +453,7 @@ export default {
                     params: {}}).then((res) => {
                     if(100 == res.data.commonResultCode.code){
                         this.fishing_port_list = res.data.fishingPortConfigList
+                        bus.emit('fishing_port_list', this.fishing_port_list)
                     // alert(this.fishing_port_list[0].name)
                     // alert(this.fishing_port_list[0].lat)
 

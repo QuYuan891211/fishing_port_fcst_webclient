@@ -20,10 +20,7 @@ export default {
         var child1_1_1 = document.createElement('span');
         child1_1_1.innerHTML=header_text
 
-
-        var body_text = 0
         //[TO-DO] 有待改进，代码过于复杂  ch1_2_1 body文字（例如有效波高）
-        var child1_2_1 = document.createElement('span');
         for(var j = 0; j< all_ybg_statics_data_5.length;j++){
             if(fishing_port_list[i].name == all_ybg_statics_data_5[j].site){
                 var time_statis = all_ybg_statics_data_5[j].timeLevelResultList
@@ -32,7 +29,7 @@ export default {
                         var max = time_statis[k].max
                         var color = this.warning_level_color_img(max)
                         child1_1.setAttribute("style", "background: url(/static/images/" + color +") no-repeat;");
-                        body_text = String(max)
+                        // body_text = String(max)
                         break;
                     }
                 }
@@ -85,6 +82,10 @@ warning_level_color_img(val){
         return red_warning_color
         }
     },
+
+    
+
+
 
     addNode_detail(fishing_port_list, all_ybg_statics_data_5, selected_time, ele,unit){
         var header_text = selected_time.toString() + 'H'

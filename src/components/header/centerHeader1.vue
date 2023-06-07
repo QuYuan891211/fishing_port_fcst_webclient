@@ -3,7 +3,7 @@
         <div class="top-bar-left d-flex j-end a-center">
             <!-- <img src="@/assets/top_title.png" alt=""> -->
             <!-- <img class="logo" src="@/assets/nmefclogo.png" alt=""> -->
-            <text class="title">渔港海浪预报平台</text>
+            <text class="title">渔港海浪预警报平台</text>
         </div>
         <div class="top-bar-right d-flex j-end a-center">
             <div class="time">{{ curTime }}</div>
