@@ -7,7 +7,7 @@
 
 	<div>
 		<el-collapse v-model="activeNames" accordion>
-			<el-collapse-item v-for="(item, index) in collapse_list" :key="index" :name="index">
+			<el-collapse-item v-for="(item, id) in collapse_list" :key="id" :name="id">
 				<template #title>
                     <div>
                         <img class="time-icon" src="@/assets/late.png" alt="">
@@ -121,7 +121,7 @@ export default {
               },
             ],
             
-            activeNames: [],
+            activeNames: [0],
             url_last_data : 'http://'+ baseurl+':8085/fcst/filterlastAll',
             url_query_data: 'http://'+ baseurl+':8085/fcst/queryAll',
             data_wave:null,
@@ -151,9 +151,9 @@ export default {
               scope:scope,
               warning_level_img:warning_level_img,
               
-              setIndex: function(index){
-              this.index = index
-              },
+              // setIndex: function(index){
+              // this.index = index
+              // },
               setWarning_level_img: function(warning_level_img){
               this.warning_level_img = warning_level_img
               },
