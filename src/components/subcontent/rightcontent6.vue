@@ -87,35 +87,35 @@ export default {
               {
                 name: '24小时警报',
                 time_level:24,
-                id: 1,
+                id: 0,
                 content: '无',
                 site_list:[]
               },
               {
                 name: '48小时警报',
                 time_level:48,
-                id: 2,
+                id: 1,
                 content: '无',
                 site_list:[]
               },
                 {
                 name: '72小时警报',
                 time_level:72,
-                id: 3,
+                id: 2,
                 content: '无',
                 site_list:[]
               },
                 {
                 name: '96小时警报',
                 time_level:96,
-                id: 4,
+                id: 3,
                 content: '无',
                 site_list:[]
               },
                 {
                 name: '120小时警报',
                 time_level:120,
-                id: 5,
+                id: 4,
                 content: '无',
                 site_list:[]
               },
