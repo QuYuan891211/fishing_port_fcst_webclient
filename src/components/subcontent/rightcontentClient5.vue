@@ -54,6 +54,7 @@ export default {
             //第二要素
             option_ele:[],
             name_option_ele: null,
+            rule:'米',
             unit:null,
             title:"未来120小时",
             name_ele:null,
@@ -171,6 +172,11 @@ export default {
                 yAxis: [
                     {
                         type: 'value',
+                        name: this.selected_ele + '(' + this.rule + ')',
+                        nameTextStyle:{
+                         color:"#ffffff", 
+                         fontSize:12,  
+                     },
                         splitLine: { show: false,  lineStyle:{opacity:0.5,type: 'dashed'}},
                         axisLabel: {
                             textStyle: {

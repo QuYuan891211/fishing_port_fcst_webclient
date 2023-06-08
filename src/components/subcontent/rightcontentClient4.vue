@@ -51,6 +51,7 @@ export default {
             data_arr_7:[],
             time_arr_7:[],
             //第二要素
+            rule:'米',
             option_ele:[],
             name_option_ele: null,
             unit:null,
@@ -192,6 +193,11 @@ export default {
                 yAxis: [
                     {
                         type: 'value',
+                        name: this.selected_ele + '(' + this.rule + ')',
+                        nameTextStyle:{
+                         color:"#ffffff", 
+                         fontSize:12,  
+                     },
                         splitLine:{ show: false,  lineStyle:{opacity:0.5,type: 'dashed'}},
                         axisLabel: {
                             textStyle: {

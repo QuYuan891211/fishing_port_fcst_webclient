@@ -30,6 +30,77 @@ let time_line_marks =
         96:'96H',
         120:'120H'
     }
+
+        let ele_list = [
+            {
+                "id": 1,
+                "name": "有效波高"
+            },
+            // {
+            //     "id": 2,
+            //     "name": "最大波高"
+            // },
+            // {
+            //     "id": 3,
+            //     "name": "风速"
+            // },
+            // {
+            //     "id": 4,
+            //     "name": "风向"
+            // },
+            // {
+            //     "id": 5,
+            //     "name": "有效波周期"
+            // },
+            // {
+            //     "id": 6,
+            //     "name": "最大波周期"
+            // },
+            // {
+            //     "id": 7,
+            //     "name": "大气压"
+            // },
+            // {
+            //     "id": 8,
+            //     "name": "气温"
+            // },
+            // {
+            //     "id": 9,
+            //     "name": "水温"
+            // },
+            // {
+            //     "id": 10,
+            //     "name": "波高"
+            // },
+            // {
+            //     "id": 11,
+            //     "name": "波向"
+            // },
+            // {
+            //     "id": 12,
+            //     "name": "周期"
+            // },
+            // {
+            //     "id": 13,
+            //     "name": "1/10波高"
+            // },
+            // {
+            //     "id": 14,
+            //     "name": "1/10周期"
+            // },
+            // {
+            //     "id": 15,
+            //     "name": "最大风速"
+            // },
+            // {
+            //     "id": 16,
+            //     "name": "相对湿度"
+            // },
+            // {
+            //     "id": 17,
+            //     "name": "盐度"
+            // }
+        ]
 //pro
 // let baseurl = '128.5.9.127'
 
@@ -149,5 +220,6 @@ export {
     orange_warning_color_path,
     yellow_warning_color_path,
     blue_warning_color_path,
-    no_warning_color_path
+    no_warning_color_path,
+    ele_list
 }
